@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <title>ffb2019</title>
+  <meta charset="utf-8" />
+  <meta name="description" content="ffb 2019" />
+</head>
+<body>
+
+<ul id="authors"></ul>
+
+  <script type="text/javascript">
+  const ul = document.getElementById('authors');
+  let url = 'https://randomuser.me/api/?results=10';
+
+  function createNode(element) {
+    return document.createElement(element);
+  }
+
+  function append(parent, el) {
+    return parent.appendChild(el);
+  }
+
+  fetch(url)
+  .then((resp) => resp.json()) // Transform the data into json
+  .then(function(data) {
+    let authors = data.results; // Get the results
+    return authors.map(function(author) { // Map through the results and for each run the code below
+      let li = createNode('li'), //  Create the elements we need
+          img = createNode('img'),
+          span = createNode('span');
+      img.src = author.picture.medium;  // Add the source of the image to be the src of the img element
+      span.innerHTML = `${author.name.first} ${author.name.last}`; // Make the HTML of our span to be the first and last name of our author
+      append(li, img); // Append all our elements
+      append(li, span);
+      append(ul, li);
+    })
+  })
+  </script>
+</body>
+</html>
